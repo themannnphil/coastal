@@ -13,28 +13,26 @@
 //     },
 //     staleTime: 60 * 1000,
 //   });
-// };
+// };// hooks/useMetrics.ts
 import { useQuery } from "@tanstack/react-query";
 import axios from "../lib/axiosClient";
 import { useDashboardStore } from "./useDashBoardStore";
+import { Metric } from "../types/metric";
+
+type MetricsResponse = {
+  metrics: Metric[];
+};
 
 export const useMetrics = () => {
   const { timeframe } = useDashboardStore();
 
-  return useQuery(["metrics", timeframe], async () => {
-    const { data } = await axios.get(`/metrics?timeframe=${timeframe}`);
-    return data.metrics;
+  return useQuery<Metric[], Error>({
+    queryKey: ["metrics", timeframe],
+    queryFn: async () => {
+      const { data } = await axios.get<MetricsResponse>(
+        `/metrics?timeframe=${timeframe}`
+      );
+      return data.metrics;
+    },
   });
 };
-
-// export const useMetrics = (timeframe: string) => {
-//   return {
-//     data: {
-//       metrics: [
-//         { name: "CPU Usage", value: "32%" },
-//         { name: "Memory", value: "4.5 GB" },
-//       ],
-//     },
-//     isLoading: false,
-//   };
-// };

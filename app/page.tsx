@@ -1,25 +1,32 @@
 "use client"; // Needed to use Zustand, React Query in App Router
-import { useDashboardStore } from "../store/useDashboardStore";
+
 import { useMetrics } from "../hooks/useMetrics";
+import TimeFrameToggle from "../components/TimeFrameToggle";
 import MetricCard from "../components/MetricCard";
 import ChartCard from "../components/ChartCard";
-import TimeFrameToggle from "../components/TimeFrameToggle";
+import { Metric } from "../types/metric";
 
 export default function Dashboard() {
-  const { timeframe } = useDashboardStore();
-  const { data, isLoading } = useMetrics(timeframe);
+  const { data: metrics, isLoading } = useMetrics();
 
-  if (isLoading) return <div>Loading...</div>;
+  if (isLoading || !metrics)
+    return <div className="text-center mt-10">Loading...</div>;
 
   return (
-    <main className="p-6 grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6">
+    <div className="p-6 space-y-6">
       <TimeFrameToggle />
-      {data.metrics.map((metric: any) => (
-        <MetricCard key={metric.name} metric={metric} />
-      ))}
-      {data.metrics.map((metric: any) => (
-        <ChartCard key={metric.name} metric={metric} />
-      ))}
-    </main>
+
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+        {metrics.map((metric) => (
+          <MetricCard key={metric.name} metric={metric} />
+        ))}
+      </div>
+
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+        {metrics.map((metric) => (
+          <ChartCard key={metric.name} metric={metric} />
+        ))}
+      </div>
+    </div>
   );
 }
