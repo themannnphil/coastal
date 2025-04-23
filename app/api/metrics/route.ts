@@ -1,9 +1,11 @@
-import type { NextApiRequest, NextApiResponse } from "next";
+// app/api/metrics/route.ts
+import { NextRequest } from "next/server";
 
-export default function handler(req: NextApiRequest, res: NextApiResponse) {
-  const timeframe = req.query.timeframe;
+export async function GET(req: NextRequest) {
+  const { searchParams } = new URL(req.url);
+  const timeframe = searchParams.get("timeframe");
 
-  res.status(200).json({
+  return Response.json({
     metrics: [
       {
         name: "Wave Height",

@@ -7,7 +7,14 @@ import ChartCard from "../components/ChartCard";
 import { Metric } from "../types/metric";
 
 export default function Dashboard() {
-  const { data: metrics, isLoading } = useMetrics();
+  const { data: metrics, isLoading, isError, error } = useMetrics();
+
+  if (isError) {
+    console.error("Error fetching metrics:", error);
+    return <div>Error loading data.</div>;
+  }
+
+  console.log({ isLoading, metrics });
 
   if (isLoading || !metrics)
     return <div className="text-center mt-10">Loading...</div>;

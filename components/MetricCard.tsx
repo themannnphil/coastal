@@ -27,14 +27,17 @@ const MetricCard = ({ metric }: Props) => {
   return (
     <div className="border rounded-lg p-4 shadow-sm bg-white space-y-2">
       <div className="flex justify-between items-center">
-        <h3 className="text-lg font-semibold">{metric.name}</h3>
+        <h3 className="text-lg font-semibold text-black">{metric.name}</h3>
+
         <span
           className={`px-2 py-1 rounded text-sm ${statusColors[metric.status]}`}
         >
+          {" "}
+          {/* warning status */}
           {metric.status.toUpperCase()}
         </span>
       </div>
-      <div className="text-2xl font-bold">
+      <div className="text-2xl text-red-300  font-bold">
         {metric.value} {metric.unit}
       </div>
       <div className="flex items-center gap-1 text-sm text-gray-600">

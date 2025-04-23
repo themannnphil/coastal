@@ -29,10 +29,10 @@ export const useMetrics = () => {
   return useQuery<Metric[], Error>({
     queryKey: ["metrics", timeframe],
     queryFn: async () => {
-      const { data } = await axios.get<MetricsResponse>(
-        `/metrics?timeframe=${timeframe}`
-      );
+      const { data } = await axios.get(`/api/metrics?timeframe=${timeframe}`);
       return data.metrics;
     },
+    staleTime: 1000 * 60, // optional
+    retry: 1,
   });
 };
