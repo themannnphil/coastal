@@ -14,14 +14,27 @@
 //     staleTime: 60 * 1000,
 //   });
 // };
-export const useMetrics = (timeframe: string) => {
-  return {
-    data: {
-      metrics: [
-        { name: "CPU Usage", value: "32%" },
-        { name: "Memory", value: "4.5 GB" },
-      ],
-    },
-    isLoading: false,
-  };
+import { useQuery } from "@tanstack/react-query";
+import axios from "../lib/axiosClient";
+import { useDashboardStore } from "./useDashBoardStore";
+
+export const useMetrics = () => {
+  const { timeframe } = useDashboardStore();
+
+  return useQuery(["metrics", timeframe], async () => {
+    const { data } = await axios.get(`/metrics?timeframe=${timeframe}`);
+    return data.metrics;
+  });
 };
+
+// export const useMetrics = (timeframe: string) => {
+//   return {
+//     data: {
+//       metrics: [
+//         { name: "CPU Usage", value: "32%" },
+//         { name: "Memory", value: "4.5 GB" },
+//       ],
+//     },
+//     isLoading: false,
+//   };
+// };
