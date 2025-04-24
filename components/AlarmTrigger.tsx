@@ -27,7 +27,7 @@ const AlarmTrigger = () => {
 
   return (
     <div className="p-4 border rounded shadow bg-white space-y-3">
-      <h2 className="text-lg font-bold">Emergency Alarm</h2>
+      <h2 className="text-lg font-bold text-base/7 text-gray-600 ">Emergency Alarm</h2>
       <button
         onClick={handleAlarm}
         disabled={loading}

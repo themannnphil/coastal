@@ -39,7 +39,7 @@ const DownloadData = () => {
 
   return (
     <div className="p-4 border rounded shadow bg-white space-y-3">
-      <h2 className="text-lg font-bold">Download Data</h2>
+      <h2 className="text-lg text-base/7 text-gray-600  font-bold">Download Data</h2>
       <button
         onClick={downloadJSON}
         className="bg-blue-500 text-white px-4 py-2 rounded mr-2"

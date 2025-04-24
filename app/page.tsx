@@ -28,16 +28,22 @@ export default function Dashboard() {
 
   return (
     <div className="p-6 space-y-6">
-      <TimeFrameToggle />
-      <AlarmTrigger />
-      <DownloadData />
-
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-        {metrics.map((metric) => (
-          <MetricCard key={metric.name} metric={metric} />
-        ))}
+      <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-4">
+         <TimeFrameToggle />
+         <div className="flex gap-2">
+           <AlarmTrigger />
+           <DownloadData />
+         </div>
       </div>
-
+      <section aria-label="Live Metrics">
+        <h2 className="text-xl font-semibold text-white-500">Live Metrics</h2>
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+          {metrics.map((metric) => (
+            <MetricCard key={metric.name} metric={metric} />
+          ))}
+        </div>
+      </section>
+      <h2 className="text-xl font-semibold text-White-300">Trends</h2>
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
         {metrics.map((metric) => (
           <ChartCard key={metric.name} metric={metric} />
