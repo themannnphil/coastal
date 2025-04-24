@@ -13,9 +13,11 @@
     "@tanstack/react-query": "5.74.3",
     "autoprefixer": "10.4.21",
     "axios": "1.8.4",
+    "leaflet": "^1.9.4",
     "next": "15.2.0",
     "react": "19.0.0",
     "react-dom": "19.0.0",
+    "react-leaflet": "^5.0.0",
     "recharts": "2.15.2",
     "zustand": "5.0.3"
   },
@@ -36,5 +38,4 @@
       "@types/react-dom": "19.0.4"
     }
   }
-  
 }
