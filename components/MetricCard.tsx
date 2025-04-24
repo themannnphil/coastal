@@ -25,10 +25,11 @@ const MetricCard = ({ metric }: Props) => {
   const isPositive = metric.change >= 0;
 
   return (
-    <div className="border rounded-lg p-4 shadow-sm bg-white space-y-2">
+    <div className="border rounded-lg p-4 shadow-sm bg-white space-y-2 rounded-xl shadow border">
       <div className="flex justify-between items-center">
-        <h3 className="text-lg font-semibold text-black">{metric.name}</h3>
-
+        <h3 className="order-first text-3xl font-semibold tracking-tight text-gray-900 sm:text-5xl">
+          {metric.name}
+        </h3>
         <span
           className={`px-2 py-1 rounded text-sm ${statusColors[metric.status]}`}
         >
@@ -37,7 +38,7 @@ const MetricCard = ({ metric }: Props) => {
           {metric.status.toUpperCase()}
         </span>
       </div>
-      <div className="text-2xl text-red-300  font-bold">
+      <div className="text-base/7 text-gray-600 ">
         {metric.value} {metric.unit}
       </div>
       <div className="flex items-center gap-1 text-sm text-gray-600">

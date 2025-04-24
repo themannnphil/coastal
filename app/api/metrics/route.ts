@@ -12,10 +12,11 @@ export async function GET(req: NextRequest) {
         unit: "cm",
         value: 120,
         previous: 100,
-        change: 20,
+        change: 27,
         status: "warning",
         chartData: [
           { time: "00:00", value: 100 },
+          { time: "03:00", value: 80 },
           { time: "06:00", value: 110 },
           { time: "12:00", value: 120 },
         ],

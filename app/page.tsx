@@ -4,6 +4,8 @@ import { useMetrics } from "../hooks/useMetrics";
 import TimeFrameToggle from "../components/TimeFrameToggle";
 import MetricCard from "../components/MetricCard";
 import ChartCard from "../components/ChartCard";
+import AlarmTrigger from "../components/AlarmTrigger";
+import DownloadData from "../components/DownloadData";
 import { Metric } from "../types/metric";
 
 export default function Dashboard() {
@@ -17,11 +19,18 @@ export default function Dashboard() {
   console.log({ isLoading, metrics });
 
   if (isLoading || !metrics)
-    return <div className="text-center mt-10">Loading...</div>;
+    return  <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 animate-pulse">
+  {[...Array(4)].map((_, i) => (
+    <div key={i} className="h-28 bg-gray-200 rounded" />
+  ))}
+</div>
+  //  <div className="text-center mt-10">Loading...</div>;
 
   return (
     <div className="p-6 space-y-6">
       <TimeFrameToggle />
+      <AlarmTrigger />
+      <DownloadData />
 
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
         {metrics.map((metric) => (
