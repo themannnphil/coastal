@@ -157,15 +157,20 @@ FIREBASE_CLIENT_EMAIL=email@project.iam.gserviceaccount.com
 
 ## 🤝 Acknowledgements
 
-* MLH Gaiathon Africa Team
-* Open source libraries and community contributors
+* Gaiathon Africa Competitions
+* Open source libraries and community contributors & pROJECT sUPERVISORS
 * Ghana’s coastal communities for inspiring this project
 
 ---
 
-## 📬 Contact
+## 📸 Screenshot of the Web App
 
-**Team Lead:** \[Your Name] – \[Your Email]
-GitHub Repo: [https://github.com/your-username/tidewatch](https://github.com/your-username/tidewatch)
+![web dashboard](https://github.com/user-attachments/assets/cf652aae-03d4-485d-b7f8-c168e8836885)
+
+
+
+
+**Team Lead:** \[Prince Phil] – \[princephil403@gmail.com]
+GitHub Repo: (https://github.com/themannnphil/coastal)
 
 > “We’re building the low-cost, real-time early warning system Africa needs to stay ahead of the tide.” 🌊
