@@ -1,10 +1,10 @@
 # 🌊 Smart Coastal Flood Monitoring System – Team TideWatch
 
 **Project Title:** TideWatch – Real-Time Coastal Flood Monitoring & Early Warning System
-**Competition:** Gaiathon Africa
+**Competition:** Gaiathon Africa 2025
 **Team:** Team TideWatch
-**Team Lead:** \[Your Name Here]
-**Members:** \[Name 1], \[Name 2], \[Name 3]
+**Team Lead:** \[Prince Philips Adorboe]
+**Members:** \[Nkansah Tabi], \[Thelma Akuffo], \[Luqman]
 
 ---
 
