@@ -1,39 +1,21 @@
 // app/api/metrics/route.ts
-import { NextRequest } from "next/server";
+import { NextRequest, NextResponse } from "next/server";
 
 export async function GET(req: NextRequest) {
   const { searchParams } = new URL(req.url);
-  const timeframe = searchParams.get("timeframe");
+  const timeframe = searchParams.get("timeframe") || "24h";
 
-  return Response.json({
-    metrics: [
-      {
-        name: "Wave Height",
-        unit: "cm",
-        value: 120,
-        previous: 100,
-        change: 27,
-        status: "warning",
-        chartData: [
-          { time: "00:00", value: 100 },
-          { time: "03:00", value: 80 },
-          { time: "06:00", value: 110 },
-          { time: "12:00", value: 120 },
-        ],
-      },
-      {
-        name: "Tide Level",
-        unit: "m",
-        value: 2.4,
-        previous: 2.2,
-        change: 9.09,
-        status: "normal",
-        chartData: [
-          { time: "00:00", value: 2.0 },
-          { time: "06:00", value: 2.2 },
-          { time: "12:00", value: 2.4 },
-        ],
-      },
-    ],
-  });
+  try {
+    const response = await fetch(`http://127.0.0.1:8000/api/metrics`);
+    const data = await response.json();
+
+    if (response.ok) {
+      return NextResponse.json({ success: true, data });
+    } else {
+      return NextResponse.json({ success: false, message: "Failed to fetch metrics" }, { status: 500 });
+    }
+  } catch (error) {
+    console.error("Error fetching metrics:", error);
+    return NextResponse.json({ success: false, message: "Internal Server Error" }, { status: 500 });
+  }
 }

@@ -1,19 +1,13 @@
+//MetricCard.tsx
 import { ArrowUpIcon, ArrowDownIcon } from "@heroicons/react/20/solid";
 import { Metric } from "../types/metric";
+import { useMetrics } from "../hooks/useMetrics";
 
 type Props = {
   metric: Metric;
 };
 
-// type Props = {
-//   metric: {
-//     name: string;
-//     unit: string;
-//     value: number;
-//     change: number;
-//     status: "normal" | "warning" | "critical";
-//   };
-// };
+
 
 const statusColors = {
   normal: "bg-green-200 text-green-800",
@@ -23,6 +17,16 @@ const statusColors = {
 
 const MetricCard = ({ metric }: Props) => {
   const isPositive = metric.change >= 0;
+  
+  const { data: metrics, isLoading, error } = useMetrics();
+  // const { data, error, isLoading } = useMetrics();
+  if (isLoading) return <div>Loading...</div>;
+  if (error instanceof Error) return <div>Error: {error.message}</div>;
+  console.log("Metrics data: ", metrics);
+  console.error()
+
+
+
 
   return (
     <div className="border rounded-lg p-4 shadow-sm bg-white space-y-2 rounded-xl shadow border">
