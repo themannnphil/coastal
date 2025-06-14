@@ -83,6 +83,7 @@ def get_status(value: float, thresholds: dict) -> str:
         return "warning"
     else:
         return "critical"
+
     
 @app.get("/api/metrics", response_model=List[MetricResponse])
 async def get_metrics(timeframe: Optional[str] = "7d", db: Session = Depends(get_db)):
@@ -104,13 +105,14 @@ async def get_metrics(timeframe: Optional[str] = "7d", db: Session = Depends(get
     print(f"Queried Metrics: {metrics}")
     # Example thresholds for status logic
     thresholds = {
-        "water_height": {"normal": 1.0, "warning": 2.0},
-        "temperature": {"normal": 20.0, "warning": 30.0},
-        "humidity": {"normal": 60.0, "warning": 80.0},  
-        "air_pressure": {"normal": 1013.25, "warning": 1020.0},
-        "wind_speed": {"normal": 10.0, "warning": 20.0},
-        "wave_height": {"normal": 1.0, "warning": 3.0},
-    }
+    "wave_height":    {"normal": 0.0, "warning": 2.5, "critical": 4.0},
+    "water_height":   {"normal": 1000.0, "warning": 1250.5, "critical": 1400},
+    "temperature":    {"normal": 30.0, "warning": 21.0, "critical": 16.0},
+    "humidity":       {"normal": 70.0, "warning": 85.0, "critical": 90.0},
+    "air_pressure":   {"normal": 1014, "warning": 1010.0, "critical": 1008.0},  # lower is worse
+    "wind_speed":     {"normal": 10.0, "warning": 20.0, "critical": 25.0},
+}
+
 
     transformed_metrics = []
 
@@ -124,7 +126,7 @@ async def get_metrics(timeframe: Optional[str] = "7d", db: Session = Depends(get
                 status=get_status(metric.wave_height, thresholds["wave_height"]),
                 unit="m",
                 chartData=[{"time": metric.timestamp.isoformat(), "value": metric.wave_height}]
-            ),
+            ),  
             "water_height": MetricValue(
                 value=metric.water_height,
                 previous=0,
@@ -174,7 +176,7 @@ async def get_metrics(timeframe: Optional[str] = "7d", db: Session = Depends(get
             previous_metric = db.query(MetricModel).filter(MetricModel.timestamp < metric.timestamp).order_by(MetricModel.timestamp.desc()).first()
             previous_value = getattr(previous_metric, metric_name) if previous_metric else 0
             change = value - previous_value
-
+    
             # Update the metric with the correct previous value and change
             transformed_metric[metric_name].previous = previous_value
             transformed_metric[metric_name].change = change

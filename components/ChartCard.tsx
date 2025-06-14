@@ -26,7 +26,7 @@ const ChartCard = ({ metric, name }: Props) => {
     <div className="p-4 border rounded-lg bg-white">
       <h4 className="text-base/7 text-gray-600 ">
         
-         {name}
+         {name} ({metric.unit})
       
       </h4> 
       

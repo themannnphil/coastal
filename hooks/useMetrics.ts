@@ -40,6 +40,7 @@ export const useMetrics = () => {
       }
     },
     staleTime: 1000 * 60,  // 1 min cache
+    refetchInterval: 10000, // Auto refetch every 10s
     retry: 1,
   });
 };
