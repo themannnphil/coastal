@@ -1,13 +1,13 @@
-//MetricCard.tsx
-import { ArrowUpIcon, ArrowDownIcon } from "@heroicons/react/20/solid";
-import { Metric } from "../types/metric";
+//MetricCard.tsxolid";
 import { useMetrics } from "../hooks/useMetrics";
+import { flattenMetrics } from '@/utils/transformMetrics';
+import {  MetricStatus } from "../types/metric";
 
+import { ArrowUpIcon, ArrowDownIcon } from "@heroicons/react/20/solid";
 type Props = {
-  metric: Metric;
+  metric: MetricStatus & { name: string; timestamp: string };
+  
 };
-
-
 
 const statusColors = {
   normal: "bg-green-200 text-green-800",
@@ -15,14 +15,11 @@ const statusColors = {
   critical: "bg-red-200 text-red-800",
 };
 
+
 const MetricCard = ({ metric }: Props) => {
   const isPositive = metric.change >= 0;
-  
-  const { data: metrics, isLoading, error } = useMetrics();
-  // const { data, error, isLoading } = useMetrics();
-  if (isLoading) return <div>Loading...</div>;
-  if (error instanceof Error) return <div>Error: {error.message}</div>;
-  console.log("Metrics data: ", metrics);
+
+  console.log("Metrics data: ", metric);
   console.error()
 
 
@@ -39,7 +36,8 @@ const MetricCard = ({ metric }: Props) => {
         >
           {" "}
           {/* warning status */}
-          {metric.status.toUpperCase()}
+          {metric.status}
+          {/* {metric.status.toUpperCase()} */}
         </span>
       </div>
       <div className="text-base/7 text-gray-600 ">
@@ -51,7 +49,8 @@ const MetricCard = ({ metric }: Props) => {
         ) : (
           <ArrowDownIcon className="w-4 h-4 text-red-500" />
         )}
-        {Math.abs(metric.change)}%
+        {!isNaN(metric.change) ? Math.abs(metric.change).toFixed(1) : "0.0"}%
+
       </div>
     </div>
   );

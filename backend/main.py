@@ -7,6 +7,9 @@ from pydantic import BaseModel
 
 from models import Metric as MetricModel
 from database import get_db
+from fastapi.middleware.cors import CORSMiddleware
+
+
 
 app = FastAPI()
 
@@ -21,6 +24,9 @@ class MetricValue(BaseModel):
     status: str
     unit: str
     chartData: List[dict]  # List of dicts with "time" and "value" fields
+    
+    class Config:
+        orm_mode = True
 
 class MetricResponse(BaseModel):
     id: int
@@ -32,6 +38,8 @@ class MetricResponse(BaseModel):
     wind_speed: MetricValue
     timestamp: datetime
 
+    class Config:
+        orm_mode = True
 
 
 class SensorData(BaseModel):
@@ -48,6 +56,8 @@ class SensorData(BaseModel):
 
     class Config:
         orm_mode = True
+    # class Config:
+    #     from_attributes = True  # Updated from 'orm_mode = True'
 
 # -----------------------------
 # POST: /api/ingest
@@ -75,7 +85,7 @@ def get_status(value: float, thresholds: dict) -> str:
         return "critical"
     
 @app.get("/api/metrics", response_model=List[MetricResponse])
-async def get_metrics(timeframe: Optional[str] = "24h", db: Session = Depends(get_db)):
+async def get_metrics(timeframe: Optional[str] = "7d", db: Session = Depends(get_db)):
     now = datetime.utcnow()
 
     if timeframe == "24h":
@@ -88,12 +98,15 @@ async def get_metrics(timeframe: Optional[str] = "24h", db: Session = Depends(ge
         raise HTTPException(status_code=400, detail="Invalid timeframe")
 
     metrics = db.query(MetricModel).filter(MetricModel.timestamp >= since).all()
+    if not metrics:
+         raise HTTPException(status_code=404, detail="No data found for the given timeframe")
 
+    print(f"Queried Metrics: {metrics}")
     # Example thresholds for status logic
     thresholds = {
         "water_height": {"normal": 1.0, "warning": 2.0},
         "temperature": {"normal": 20.0, "warning": 30.0},
-        "humidity": {"normal": 60.0, "warning": 80.0},
+        "humidity": {"normal": 60.0, "warning": 80.0},  
         "air_pressure": {"normal": 1013.25, "warning": 1020.0},
         "wind_speed": {"normal": 10.0, "warning": 20.0},
         "wave_height": {"normal": 1.0, "warning": 3.0},
@@ -167,8 +180,12 @@ async def get_metrics(timeframe: Optional[str] = "24h", db: Session = Depends(ge
             transformed_metric[metric_name].change = change
 
         transformed_metrics.append(transformed_metric)
+    # print(f"GOT Metric: {transformed_metrics}")
+    if not transformed_metrics:
+        return {"message": "No metrics available for the specified timeframe", "data": []}
 
     return transformed_metrics
+    
 
 
 # -----------------------------
@@ -187,3 +204,11 @@ async def get_location():
     location = {"latitude": 5.6506, "longitude": 0.0166}  # Example: Keta, Ghana
     return {"location": location}
 # -----------------------------
+# Add this *after* creating your FastAPI app instance
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["http://localhost:3000"],  # or ["*"] during development
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)

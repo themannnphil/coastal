@@ -6,16 +6,30 @@ import {
   Tooltip,
   ResponsiveContainer,
 } from "recharts";
-import { Metric } from "../types/metric";
+import { flattenMetrics } from '@/utils/transformMetrics';
+import {  MetricStatus } from "../types/metric";
+
 
 type Props = {
-  metric: Metric;
+  name: string;
+  metric: {
+    unit: string;
+    chartData: { time: string; value: number }[];
+  };
 };
 
-const ChartCard = ({ metric }: Props) => {
+const ChartCard = ({ metric, name }: Props) => {
+  
+
   return (
+    
     <div className="p-4 border rounded-lg bg-white">
-      <h4 className="text-base/7 text-gray-600 ">{metric.name}</h4>
+      <h4 className="text-base/7 text-gray-600 ">
+        
+         {name}
+      
+      </h4> 
+      
       <ResponsiveContainer width="100%" height={200}>
         <LineChart data={metric.chartData}>
           <XAxis dataKey="time" />

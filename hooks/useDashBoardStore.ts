@@ -8,6 +8,6 @@ interface DashboardState {
 }
 
 export const useDashboardStore = create<DashboardState>((set) => ({
-  timeframe: "24h",
+  timeframe: "7d",
   setTimeframe: (t) => set({ timeframe: t }),
 }));

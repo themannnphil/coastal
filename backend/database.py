@@ -1,7 +1,7 @@
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
 
-DATABASE_URL = "postgresql://postgres:12345678@localhost/coastal_db"
+DATABASE_URL = "postgresql://user:password@localhost/coastal_db"
 
 # Create the SQLAlchemy engine and session
 engine = create_engine(DATABASE_URL)
