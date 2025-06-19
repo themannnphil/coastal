@@ -11,6 +11,7 @@ export function flattenMetrics(metrics: RawMetric[]) {
     timestamp: string;
     chartData: { time: string; value: number }[];
   }[] = [];
+  
 
   metrics.forEach((entry) => {
     result.push(
