@@ -4,7 +4,7 @@ from sqlalchemy.orm import sessionmaker
 from datetime import datetime
 
 # Define the PostgreSQL connection string (replace with your own credentials)
-DATABASE_URL = "postgresql://postgres:12345678@localhost/coastal_db"
+DATABASE_URL = "postgresql://postgres:admin1234@localhost/coastal_db"
 
 # Create the SQLAlchemy engine and session
 engine = create_engine(DATABASE_URL)
