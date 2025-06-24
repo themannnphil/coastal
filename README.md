@@ -40,9 +40,9 @@ Coastal communities in Ghana and across Africa face increasing threats from risi
 * **Frontend:** Next.js, TypeScript, TailwindCSS, Recharts, Zustand, React Query
 * **Backend:** FastAPI, Python, Firebase Admin SDK
 * **Data Flow:** MQTT, LoRa/GSM modules, JSON APIs
-* **Auth:** JWT-based secured API routes
-* **Database:** Firebase Realtime DB
-* **Hardware:** ESP32, waterproof pressure transducer, DHT11, LoRa module, solar panel
+* **Auth:** JWT-based secured API routes(currently not employed)
+* **Database:** PostgreSQL DB
+* **Hardware:** ESP32, waterproof pressure transducer, DHT11, LoRa module, solar panel and a Raspberry Pi Microprocessor. 
 
 ---
 
@@ -58,9 +58,8 @@ Coastal communities in Ghana and across Africa face increasing threats from risi
 ├── backend/                  # FastAPI backend
 │   ├── main.py
 │   ├── auth.py
-│   ├── routes/
-│   ├── firebase_config.py
-│   └── requirements.txt
+│   └──  routes/
+
 ```
 
 ---
@@ -71,7 +70,7 @@ Coastal communities in Ghana and across Africa face increasing threats from risi
 
 * Node.js v18+
 * Python 3.9+
-* Firebase account & credentials
+* PostgreSql account & credentials
 
 ### 🔹 Setup Frontend
 
@@ -85,7 +84,7 @@ npm run dev
 
 ```bash
 cd backend
-pip install -r requirements.txt
+```activate virtual environment ```
 uvicorn main:app --reload
 ```
 
@@ -99,7 +98,7 @@ Create `.env` files in both `frontend/` and `backend/` using the `.env.example` 
 POST /api/ingest         # Store sensor data
 GET  /api/metrics?timeframe=24h   # Get metric history
 GET  /api/logs           # Recent threshold breach logs
-POST /api/auth/login     # Get JWT token
+
 ```
 
 ---
@@ -130,10 +129,10 @@ POST /api/auth/login     # Get JWT token
 NEXT_PUBLIC_API_KEY=your_public_token
 
 # backend/.env
-JWT_SECRET_KEY=your_secret_key
-FIREBASE_PROJECT_ID=project-id
-FIREBASE_PRIVATE_KEY=your-private-key
-FIREBASE_CLIENT_EMAIL=email@project.iam.gserviceaccount.com
+
+PostgreSql Database= coastal_db
+PostgreSql password= ******
+
 ```
 
 ---
@@ -149,14 +148,17 @@ FIREBASE_CLIENT_EMAIL=email@project.iam.gserviceaccount.com
 ## 🎯 Future Plans
 
 * Add real-time MQTT → WebSocket pipeline
-* Integrate machine learning for flood prediction
+* Integrate machine learning for flood prediction (future implementation)
 * Scale deployments to additional West African countries
-* Offline-first mobile app for remote field access
+* Offline-first Web app for remote field authorised access. 
 
 ---
 
 ## 🤝 Acknowledgements
 
+* University Of Ghana, Legon
+* School of Engineering Sciences, UG
+* Computer Engineering Department @SES, UG
 * Gaiathon Africa Competitions
 * Open source libraries and community contributors & pROJECT sUPERVISORS
 * Ghana’s coastal communities for inspiring this project
@@ -167,7 +169,8 @@ FIREBASE_CLIENT_EMAIL=email@project.iam.gserviceaccount.com
 
 ![web dashboard](https://github.com/user-attachments/assets/cf652aae-03d4-485d-b7f8-c168e8836885)
 
-
+## 📸🔧 Picture of the IoT System
+   Coming soon*
 
 
 **Team Lead:** \[Prince Phil] – \[princephil403@gmail.com]
